@@ -1,0 +1,51 @@
+﻿@page "/Producto"
+@using Models
+@using Services
+@inject IProductosServices ProductosServices
+
+<MudText Typo="Typo.h3" Class="d-flex justify-center">PRODUCTOS</MudText>
+
+<br />
+<br />
+
+@if (prod == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <MudGrid>
+        @foreach (var item in prod)
+        {
+            <MudItem xs="12" sm="10" md="6" lg="4">
+                <MudCard>
+                    <MudCardMedia Image="@item.Imagen" Height="200" Width="60" />
+                    <MudCardHeader Class="red accent-4 shades-text text-white">
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@item.Producto</MudText>
+                            <MudText Typo="Typo.body1">@item.Detalles</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+
+                    </MudCardContent>
+                    <MudCardActions>
+                          <MudText Typo="Typo.body1">CONSIGUE EL TUYO!!</MudText>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+
+
+
+
+
+@code {
+    IEnumerable<Productos> prod = new List<Productos>();
+    protected override async Task OnInitializedAsync()
+    {
+        prod = await ProductosServices.GetAll();
+    }
+}

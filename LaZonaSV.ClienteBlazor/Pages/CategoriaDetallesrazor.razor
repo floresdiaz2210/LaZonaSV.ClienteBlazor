@@ -1,0 +1,54 @@
+﻿@page "/CategoriaDetalles/{id:int}"
+@using Models
+@using Services
+@inject ICategoriasServices CategoriasServices
+
+<MudText Typo="Typo.h5" Class="d-flex justify-center">Detalles de la Categoría</MudText>
+@if (cate == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <MudCard>
+        <MudCardHeader Class="red accent-4 shades-text text-white">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6" Class="d-flex justify-center">@cate.Categoria</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText Typo="Typo.body2">@cate.Categoria</MudText>
+        </MudCardContent>
+        <MudCardActions class="d-flex justify-center">
+            <MudText Typo="Typo.subtitle1">
+               Los mejores productos a precios accesibles visita nuestra sucursal y te atenderemos con gusto.
+            </MudText>
+
+            <br />
+            <br />
+
+            <img src="images/modelo.jpeg" alt="Local del negocio" Elevation="25" Class="rounded-lg" width="250" height="250" />
+
+            @*<div class="d-flex justify-center" >*@
+            @*<img src="@saborH.Imagen" alt="@saborH.Nombre" Elevation="25" Class="rounded-lg" width="250" height="250" />*@
+            @*te lo comente por que en este caso categorias ni tenes imagen*@
+            @*</div>*@
+        </MudCardActions>
+    </MudCard>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public int id { get; set; }
+
+    Categorias cate = new Categorias();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id > 0)
+            cate = await CategoriasServices.GetById(id);
+    }
+}

@@ -1,0 +1,49 @@
+﻿@page "/Categoria"
+@using Models
+@using Services
+@inject ICategoriasServices CategoriasServices
+
+<MudText Typo="Typo.h3" Class="d-flex justify-center">CATEGORíAS QUE OFRECEMOS</MudText>
+
+<br />
+<br />
+
+@if (cate == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <MudGrid>
+        @foreach (var item in cate)
+        {
+            
+            <MudItem xs="12" sm="10" md="6" lg="4">
+                <MudCard>
+                    @*<MudCardMedia Image="@item.Imagen" Height="200" Width="60" />*@
+                    @*te lo comente por que en este caso categorias ni tenes imagen*@
+                    <MudCardHeader Class="red accent-4 shades-text text-white">
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@item.Categoria</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudText Typo="Typo.body1">VISITA NUESTRAS SUCURSALES PARA MAS INFORMACIÓN!!</MudText>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+
+
+@code {
+    IEnumerable<Categorias> cate = new List<Categorias>();
+    protected override async Task OnInitializedAsync()
+    {
+        cate = await CategoriasServices.GetAll();
+    }
+}

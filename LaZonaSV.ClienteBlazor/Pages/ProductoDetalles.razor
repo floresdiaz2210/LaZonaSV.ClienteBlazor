@@ -1,0 +1,46 @@
+﻿@page "/Productodetalles/{id:int}"
+@using Models
+@using Services
+@inject IProductosServices ProductosServices
+
+<MudText Typo="Typo.h5" Class="d-flex justify-center">Detalles Productos</MudText>
+
+
+@if (prod == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+     <MudCard>
+        <MudCardHeader Class="red accent-4 shades-text text-white">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6" Class="d-flex justify-center">@prod.Producto</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText Typo="Typo.body2">@prod.Precio</MudText>
+        </MudCardContent>
+        <MudCardActions class="d-flex justify-center">
+            @*<div class="d-flex justify-center" >*@
+            <img src="@prod.Imagen" alt="@prod.Producto" Elevation="25" Class="rounded-lg" width="250" height="250" />
+
+            @*</div>*@
+        </MudCardActions>
+    </MudCard>
+}
+
+
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Productos prod = new Productos();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id > 0)
+            prod = await ProductosServices.GetById(id);
+    }
+}
